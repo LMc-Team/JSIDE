@@ -3,11 +3,14 @@ package com.lefthumor.jside.ui.main;
 import android.annotation.SuppressLint;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.lefthumor.jside.CoddingActivity;
+import com.lefthumor.jside.api.OnEditorLoadFinished;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +19,22 @@ import java.util.List;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class EditorPagerAdapter extends FragmentStateAdapter {
+public class EditorPagerAdapter extends FragmentStatePagerAdapter {
 
 
     private List<CodeEditorFragment> fragments;
 
+    List<Long> idList;
+
     int total;
 
+    CoddingActivity activity;
+
     public EditorPagerAdapter(@NonNull CoddingActivity fragmentActivity) {
-        super(fragmentActivity);
+        super(fragmentActivity.getSupportFragmentManager());
         fragments = new ArrayList<>();
+        idList = new ArrayList<>();
+        activity = fragmentActivity;
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -33,12 +42,6 @@ public class EditorPagerAdapter extends FragmentStateAdapter {
         fragments.add(fragment);
         total = fragments.size();
         notifyDataSetChanged();
-    }
-
-
-    @Override
-    public long getItemId(int position) {
-        return fragments.get(position).hashCode();
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -58,25 +61,34 @@ public class EditorPagerAdapter extends FragmentStateAdapter {
     public CodeEditorFragment getAt(int pos) {
         return fragments.get(pos);
     }
+    @NonNull
+//    @Override
+    public Fragment createFragment(int position,String fp) {
+        CodeEditorFragment fragment;
+        fragment= new CodeEditorFragment(() -> {
+            CodeEditorFragment codeEditorFragment = (CodeEditorFragment)getItem(position-1);
+            codeEditorFragment.setFile(fp);
+        });
 
-    @SuppressLint("NotifyDataSetChanged")
-    public int createNew() {
-        total = fragments.size() + 1;
-        notifyDataSetChanged();
-        return total;
+        addNew(fragment);
+        return fragment;
     }
 
 
     @NonNull
     @Override
-    public Fragment createFragment(int position) {
-        CodeEditorFragment fragment = CodeEditorFragment.newInstance(position);
-        addNew(fragment);
-        return fragment;
+    public Fragment getItem(int position) {
+        return fragments.get(position);
     }
 
     @Override
-    public int getItemCount() {
-        return total;
+    public int getCount() {
+        return fragments.size();
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return activity.getFileNames().get(position);
     }
 }

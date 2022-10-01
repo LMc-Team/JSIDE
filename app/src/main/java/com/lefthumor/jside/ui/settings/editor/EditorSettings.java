@@ -5,9 +5,9 @@ public class EditorSettings {
 
     boolean wordWrap;
 
-    boolean showLineNumber;
+    boolean showLineNumber =true;
 
-    boolean pinLineNumber;
+    boolean pinLineNumber  =true;
 
     public boolean isWordWrap() {
         return wordWrap;

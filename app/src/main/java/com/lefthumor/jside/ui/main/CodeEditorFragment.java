@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.lefthumor.jside.api.OnEditorLoadFinished;
 import com.lefthumor.jside.databinding.FragmentCoddingBinding;
 import com.lefthumor.jside.ui.settings.editor.AppSettings;
 import com.lefthumor.jside.ui.settings.editor.EditorSettings;
@@ -34,12 +35,10 @@ public class CodeEditorFragment extends Fragment {
     private PageViewModel pageViewModel;
     private FragmentCoddingBinding binding;
 
-    public static CodeEditorFragment newInstance(int index) {
-        CodeEditorFragment fragment = new CodeEditorFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(ARG_SECTION_NUMBER, index);
-        fragment.setArguments(bundle);
-        return fragment;
+    OnEditorLoadFinished onEditorLoadFinished;
+
+    public CodeEditorFragment(OnEditorLoadFinished loadFinished) {
+      onEditorLoadFinished = loadFinished;
     }
 
     public void setFile(String fp) {
@@ -74,6 +73,7 @@ public class CodeEditorFragment extends Fragment {
         codeEditor = binding.codeEditor;
         initEditor(codeEditor);
 
+        onEditorLoadFinished.onFinished();
         return root;
     }
 
