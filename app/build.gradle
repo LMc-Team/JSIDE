@@ -38,6 +38,8 @@ dependencies {
     implementation 'com.eclipsesource.j2v8:j2v8:6.2.1@aar'
 
 
+    implementation 'com.github.angads25:filepicker:1.1.1'
+
     implementation 'io.github.Rosemoe.sora-editor:editor:0.17.1'
     implementation 'io.github.Rosemoe.sora-editor:language-textmate:0.17.1'
 

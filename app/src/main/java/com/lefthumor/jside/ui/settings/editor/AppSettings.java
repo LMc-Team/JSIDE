@@ -1,7 +1,11 @@
 package com.lefthumor.jside.ui.settings.editor;
 
 public class AppSettings {
-    private static EditorSettings editorSettings = new EditorSettings();
+    public static void setEditorSettings(EditorSettings editorSettings) {
+        AppSettings.editorSettings = editorSettings;
+    }
+
+    private static EditorSettings editorSettings ;
 
     public static EditorSettings getEditorSettings() {
         return editorSettings;

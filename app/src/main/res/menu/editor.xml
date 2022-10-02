@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_savefile"
+        android:title="@string/save_file" />
+    <item
+        android:id="@+id/menu_openfile"
+        android:title="@string/open_file" />
+
+    <item
+        android:id="@+id/menu_saveas"
+        android:title="@string/save_as" />
+    <item android:title="@string/editor" android:id="@+id/menu_editor">
+        <menu>
+            <item
+                android:id="@+id/menu_open_wordwrap"
+                android:checkable="true"
+                android:title="@string/open_woedwrap" />
+            <item
+                android:id="@+id/menu_open_linenumber"
+                android:checkable="true"
+                android:title="@string/show_line_number" />
+            <item
+                android:id="@+id/menu_open_pinlinenumber"
+                android:checkable="true"
+                android:title="@string/pin_line_number" />
+            <item
+                android:id="@+id/menu_open_icu"
+                android:checkable="true"
+                android:title="@string/use_icu" />
+            <item
+                android:id="@+id/menu_open_magnifier"
+                android:checkable="true"
+                android:title="@string/open_magnifier" />
+        </menu>
+    </item>
+</menu>

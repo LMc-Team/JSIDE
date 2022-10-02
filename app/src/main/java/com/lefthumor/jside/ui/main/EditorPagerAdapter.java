@@ -11,9 +11,14 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.lefthumor.jside.CoddingActivity;
 import com.lefthumor.jside.api.OnEditorLoadFinished;
+import com.lefthumor.jside.ui.settings.editor.AppSettings;
+import com.lefthumor.jside.ui.settings.editor.EditorSettings;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.github.rosemoe.sora.widget.CodeEditor;
+import io.github.rosemoe.sora.widget.component.Magnifier;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -23,6 +28,8 @@ public class EditorPagerAdapter extends FragmentStatePagerAdapter {
 
 
     private List<CodeEditorFragment> fragments;
+
+    List<CodeEditor> editors;
 
     List<Long> idList;
 
@@ -35,6 +42,7 @@ public class EditorPagerAdapter extends FragmentStatePagerAdapter {
         fragments = new ArrayList<>();
         idList = new ArrayList<>();
         activity = fragmentActivity;
+        editors = new ArrayList<>();
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -58,15 +66,32 @@ public class EditorPagerAdapter extends FragmentStatePagerAdapter {
         notifyDataSetChanged();
     }
 
+    public void resetEditor() {
+        for (CodeEditor editor :
+                editors) {
+            resetEditor(editor);
+        }
+    }
+    private void resetEditor(CodeEditor codeEditor) {
+        EditorSettings editorSettings = AppSettings.getEditorSettings();
+        codeEditor.getProps().useICULibToSelectWords = editorSettings.isUseICU();
+        codeEditor.getComponent(Magnifier.class).setEnabled(editorSettings.isEnableMagnifier());
+        codeEditor.setWordwrap(editorSettings.isWordWrap());
+        codeEditor.setLineNumberEnabled(editorSettings.isShowLineNumber());
+        codeEditor.setPinLineNumber(editorSettings.isPinLineNumber());
+    }
+
     public CodeEditorFragment getAt(int pos) {
         return fragments.get(pos);
     }
+
     @NonNull
 //    @Override
-    public Fragment createFragment(int position,String fp) {
+    public Fragment createFragment(int position, String fp) {
         CodeEditorFragment fragment;
-        fragment= new CodeEditorFragment(() -> {
-            CodeEditorFragment codeEditorFragment = (CodeEditorFragment)getItem(position-1);
+        fragment = new CodeEditorFragment(() -> {
+            CodeEditorFragment codeEditorFragment = (CodeEditorFragment) getItem(position - 1);
+            editors.add(codeEditorFragment.getCodeEditor());
             codeEditorFragment.setFile(fp);
         });
 

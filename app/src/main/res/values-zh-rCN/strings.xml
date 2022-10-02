@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CodeEditor</string>
+    <string name="save_file">保存</string>
+    <string name="open_file">打开文件</string>
+    <string name="save_as">另存为</string>
+    <string name="editor">编辑器</string>
+    <string name="open_woedwrap">自动换行</string>
+    <string name="show_line_number">显示行号</string>
+    <string name="pin_line_number">固定行号</string>
+    <string name="use_icu">启用ICU</string>
+    <string name="open_magnifier">启用放大镜</string>
+</resources>
